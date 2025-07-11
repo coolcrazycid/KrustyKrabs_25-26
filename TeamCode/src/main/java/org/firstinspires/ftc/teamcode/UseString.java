@@ -8,9 +8,11 @@ public class UseString extends OpMode {
     @Override
 
     public void init() {
-        String myName = "Alan Smith";
+        String myName = "Charik Malik";
+        int grade = 9;
 
         telemetry.addData("Hello", myName);
+        telemetry.addData("Grade", grade);
     }
 
     @Override
