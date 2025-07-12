@@ -1,31 +1,42 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-public class ProgrammingBoard6 {
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+public class ProgrammingBoard7 {
     private DigitalChannel touchSensor;
     private DcMotor motor;
     private double ticksPerRotation;
     private Servo servo;
     private AnalogInput pot;
+    private ColorSensor colorSensor;
+    private DistanceSensor distanceSensor;
 
     public void init(HardwareMap hwMap) {
         touchSensor = hwMap.get(DigitalChannel.class, "touch_sensor");
         touchSensor.setMode(DigitalChannel.Mode.INPUT);
         motor = hwMap.get(DcMotor.class, "motor");
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ticksPerRotation = motor.getMotorType().getTicksPerRev();
         servo = hwMap.get(Servo.class, "servo");
         pot = hwMap.get(AnalogInput.class, "pot");
+
+        colorSensor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+        distanceSensor = hwMap.get(DistanceSensor.class, "sensor_color_distance");
+
+
     }
 
     public boolean isTouchSensorPressed() {
-        return !touchSensor.getState();
+        return  !touchSensor.getState();
     }
 
     public void setMotorSpeed(double speed) {
@@ -40,11 +51,21 @@ public class ProgrammingBoard6 {
         servo.setPosition(position);
     }
 
-    public double getPotAngle(){
+    public double getPotAngle () {
         return Range.scale(pot.getVoltage(), 0, pot.getMaxVoltage(), 0, 270);
     }
 
-    public double getPotRange() {
-        return Range.scale(pot.getVoltage(), 0, pot.getMaxVoltage(), 0, 1.0);
+    public int getAmountRed() {
+        return colorSensor.red();
     }
+
+    public int getAmountBlue() {
+        return colorSensor.blue();
+    }
+
+    public double getDistance(DistanceUnit du) {
+        return distanceSensor.getDistance(du);
+    }
+
+
 }
