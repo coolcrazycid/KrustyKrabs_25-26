@@ -14,7 +14,7 @@ public class ArcadeDrive extends OpMode {
 
     @Override
     public void loop() {
-        double forward = -gamepad1.left_stick_x;
+        double forward = -gamepad1.left_stick_y;
         double right = gamepad1.left_stick_x;
 
         drive.setPowers(forward + right, forward - right);
