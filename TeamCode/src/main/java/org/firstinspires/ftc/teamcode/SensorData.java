@@ -7,9 +7,6 @@ public class SensorData {
     private double colorGreen;
     private double colorBlue;
     private double colorAlpha;
-    private float gyroHeading;
-    private float gyroPitch;
-    private float gyroRoll;
     private double touchStatus;
 
     // Distance from Color/Distance Sensor
@@ -47,28 +44,6 @@ public class SensorData {
     }
     public void setColorAlpha(double colorAlpha) {
         this.colorAlpha = colorAlpha;
-    }
-
-    // IMU (Gyro)
-    public float getGyroHeading() {
-        return gyroHeading;
-    }
-    public void setGyroHeading(float gyroHeading) {
-        this.gyroHeading = gyroHeading;
-    }
-
-    public float getGyroPitch() {
-        return gyroPitch;
-    }
-    public void setGyroPitch(float gyroPitch) {
-        this.gyroPitch = gyroPitch;
-    }
-
-    public float getGyroRoll() {
-        return gyroRoll;
-    }
-    public void setGyroRoll(float gyroRoll) {
-        this.gyroRoll = gyroRoll;
     }
 
     // Touch Sensor

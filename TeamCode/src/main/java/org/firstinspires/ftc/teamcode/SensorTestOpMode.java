@@ -5,11 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
-
 
 @TeleOp(name = "Sensor Test", group = "Tests")
 public class SensorTestOpMode extends LinearOpMode {
@@ -17,7 +13,6 @@ public class SensorTestOpMode extends LinearOpMode {
     private ColorSensor colorSensor;
     private DistanceSensor distanceSensor;  // same physical sensor as colorSensor
     private RevTouchSensor touchSensor;
-    private BNO055IMU imu;
     private SensorData sensorData = new SensorData();
 
     @Override
@@ -27,23 +22,12 @@ public class SensorTestOpMode extends LinearOpMode {
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         distanceSensor = hardwareMap.get(DistanceSensor.class, "colorSensor"); // same hardware name
         touchSensor = hardwareMap.get(RevTouchSensor.class, "touchSensor");
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-
-        // Initialize IMU
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        imu.initialize(parameters);
 
         telemetry.addLine("Initialized. Press PLAY to start.");
         telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
-            // Read IMU orientation
-            Orientation angles = imu.getAngularOrientation();
-            sensorData.setGyroHeading(angles.firstAngle);  // Z axis (yaw)
-            sensorData.setGyroPitch(angles.secondAngle);   // Y axis (pitch)
-            sensorData.setGyroRoll(angles.thirdAngle);     // X axis (roll)
 
             // Update SensorData
             sensorData.setDistanceCM(distanceSensor.getDistance(DistanceUnit.CM));
@@ -60,9 +44,6 @@ public class SensorTestOpMode extends LinearOpMode {
                     (int) sensorData.getColorGreen(),
                     (int) sensorData.getColorBlue());
             telemetry.addData("Touch Pressed", sensorData.getTouchStatus() == 1 ? "YES" : "NO");
-            telemetry.addData("Gyro Heading", sensorData.getGyroHeading());
-            telemetry.addData("Gyro Pitch", sensorData.getGyroPitch());
-            telemetry.addData("Gyro Roll", sensorData.getGyroRoll());
             telemetry.update();
         }
     }
